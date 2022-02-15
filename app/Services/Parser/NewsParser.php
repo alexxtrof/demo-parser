@@ -61,7 +61,10 @@ abstract class NewsParser
                     return count($elements);
 
                 } catch (InvalidSelectorException $e) {
-                    Log::error($e->getMessage(), 'Parser');
+                    Log::error('Parser: ошибка при парсинге списка элементов', [
+                        'url' => $url,
+                        'error' => $e->getMessage(),
+                    ]);
                 }
             }
         }
@@ -120,17 +123,17 @@ abstract class NewsParser
                 $text = $this->parseItemText($document, $selectors['text']);
 
                 return [
-                    'title'    => $title,
-                    'category' => $category,
-                    'date'     => $date,
-                    'image'    => $image,
-                    'text'     => $text,
+                    'title'        => $title,
+                    'category'     => $category,
+                    'published_at' => $date,
+                    'image'        => $image,
+                    'text'         => $text,
                 ];
             } catch (\Exception $e) {
-                Log::error([
+                Log::error('Parser: ошибка при парсинге элемента', [
                     'url' => $url,
                     'error' => $e->getMessage(),
-                ], 'Parser');
+                ]);
             }
         }
 

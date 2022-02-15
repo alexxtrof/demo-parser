@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\News;
 use App\Services\Parser\NewsParser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -54,12 +55,16 @@ class ParseNewsItemJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * TODO: сохранение в БД
-     *
      * @return void
      */
     public function handle()
     {
         $data = $this->instance->parseItem($this->url);
+
+        try {
+            News::createWithCategory($data);
+        } catch (\Exception $e) {
+            \Log::error('Parser: ошибка при создании элемента', ['error' => $e->getMessage()]);
+        }
     }
 }

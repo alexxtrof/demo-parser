@@ -39,11 +39,11 @@ class RbkNewsParser extends NewsParser
     {
         // Текст статьи находится в двух блоках
         // Т.к. текст может содержать рекламные блоки, берем только теги <p>
-        $textBlock = $document->find($selector);
+        $blocks = $document->find($selector);
         $text = '';
 
-        foreach ($textBlock as $text) {
-            $paragraphs = $text->find('p');
+        foreach ($blocks as $block) {
+            $paragraphs = $block->find('p');
 
             foreach ($paragraphs as $p) {
                 $text .= (string) $p;
