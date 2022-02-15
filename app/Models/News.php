@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 /**
  * @mixin Builder
@@ -56,25 +55,5 @@ class News extends Model
         return $query
             ->where('slug', $slug)
             ->where('published_at', $publishedAt);
-    }
-
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    public static function createWithCategory(array $data)
-    {
-        $data['slug'] = Str::slug($data['title']);
-        $item = News::findUnique($data['slug'], $data['published_at'])->first();
-
-        if (!$item) {
-            $category = NewsCategory::createByTitle($data['category']);
-
-            $item = new News($data);
-            $item->category()->associate($category);
-            $item->save();
-        }
-
-        return $item;
     }
 }

@@ -7,6 +7,7 @@ use App\Jobs\ParseNewsItemJob;
 use Carbon\Carbon;
 use DiDom\Document;
 use DiDom\Exceptions\InvalidSelectorException;
+use Illuminate\Support\Str;
 use Log;
 
 abstract class NewsParser
@@ -124,6 +125,7 @@ abstract class NewsParser
 
                 return [
                     'title'        => $title,
+                    'slug'         => Str::slug($title),
                     'category'     => $category,
                     'published_at' => $date,
                     'image'        => $image,

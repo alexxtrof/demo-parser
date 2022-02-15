@@ -28,21 +28,4 @@ class NewsCategory extends Model
     {
         return $this->hasMany(News::class);
     }
-
-    /**
-     * Создаем категорию, если она не существует
-     *
-     * @param $title
-     * @return NewsCategory
-     */
-    public static function createByTitle($title): NewsCategory
-    {
-        $slug = Str::slug($title);
-
-        $category = self::firstOrCreate(['slug' => $slug], [
-            'title' => $title,
-        ]);
-
-        return $category;
-    }
 }

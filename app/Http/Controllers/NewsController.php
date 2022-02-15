@@ -10,6 +10,8 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * TODO: Repository
+     *
      * @return View
      */
     public function index()
